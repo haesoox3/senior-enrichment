@@ -17,11 +17,13 @@ if (process.env.NODE_ENV !== 'production') {
 module.exports = app
   .use(bodyParser.urlencoded({ extended: true }))
   .use(bodyParser.json())
-  .use(express.static(resolve(__dirname, '..', 'public'))) // Serve static files from ../public
+  .use(express.static(resolve(__dirname, '..', 'browser'))) // Serve static files from ../public
   .use('/api', require('./api')) // Serve our api
+  .get('/*', (_, res) => res.sendFile(resolve(__dirname, '..', 'browser', 'index.html'))) // Send index.html for any other requests.
   // .get('/*', (_, res) => res.sendFile(resolve(__dirname, '..', 'public', 'index.html'))) // Send index.html for any other requests.
 
   // notice the use of `_` as the first parameter above. This is a pattern for parameters that must exist, but you don't use or reference (or need) in the function body that follows.
+
 
 if (module === require.main) {
   // Start listening only if we're the main module.
