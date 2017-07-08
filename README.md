@@ -62,16 +62,16 @@ Use at least sequelize, express, react, and redux when creating this app. You ca
 
 ```
 GET
-- all campuses
-- a campus by id
-- all students
-- a student by id
+X all campuses
+X a campus by id
+X all students
+X a student by id
 ```
 
 ```
 POST
-- new campus
-- new student
+X new campus
+X new student
 ```
 
 ```
