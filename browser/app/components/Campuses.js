@@ -5,9 +5,9 @@ const Campuses = (props) => {
 
   return (
     <div>
-      <p>Campuses</p>
+      <h1>Campuses</h1>
     </div>
   );
 };
 
-export default AllAlbums;
+export default Campuses;

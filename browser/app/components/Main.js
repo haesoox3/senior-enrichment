@@ -1,21 +1,67 @@
 import React, { Component } from 'react';
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import { HashRouter , Route, Switch } from 'react-router-dom';
 import axios from 'axios';
 import Campuses from './Campuses';
+import Campus from './Campus'
+import Sidebar from './Sidebar';
+import Home from './Home';
+import Students from './Students';
+import Student from './Student';
+import NewCampus from './NewCampus';
+import NewStudent from './NewStudent';
 
 export default class Main extends Component {
 
   constructor () {
     super();
+    this.state = {
+      campuses : [],
+      students: []
+    }
+    this.addCampus = this.addCampus.bind(this);
+    this.addStudent = this.addStudent.bind(this);
+  }
+
+  addCampus (campusName) {
+    axios.post('/api/campus', { name: campusName })
+    .then(res => res.data)
+    .then(campus => {
+      this.setState({
+        campuses: [...this.state.campuses, campus]
+      });
+    });
+  }
+
+  addStudent (studentName, studentEmail) {
+    axios.post('/api/student', { name: studentName, email: studentEmail })
+    .then(res => res.data)
+    .then(student => {
+      this.setState({
+        students: [...this.state.students, student]
+      });
+    });
   }
 
   render () {
     return (
-      <Router>
+      <HashRouter>
         <div id="main" className="container-fluid">
-          <Route exact path="/campus" component={Campuses} />
+          <div className="col-xs-2">
+            <Sidebar />
+          </div>
+          <div className="col-xs-10">
+            <Switch>
+              <Route exact path="/campuses" component={Campuses} />
+              <Route exact path='/students' component={Students} />
+              <Route path='/students/:studentId' component={Student} />
+              <Route path='/campuses/:campusId' component={Campus} />
+              <Route exact path='/new-campus' render={() => <NewCampus addCampus={this.addCampus}/>}  />
+              <Route exact path='/new-student' render={() => <NewStudent addStudent={this.addStudent}/>} />
+              <Route component={Home} />
+            </Switch>
+          </div>
         </div>
-    </Router>
+    </HashRouter>
     );
   }
 }
