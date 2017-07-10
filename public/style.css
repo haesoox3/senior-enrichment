@@ -8,6 +8,11 @@ body {
 #main {
   padding-left: 0; }
 
+img{
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
+
 sidebar {
   position: fixed;
   left: 0;

@@ -22,6 +22,19 @@ export default class Main extends Component {
     this.addStudent = this.addStudent.bind(this);
   }
 
+  componentDidMount(){
+    axios.get('/api/student')
+    .then(res => res.data)
+    .then(students => this.setState({ 
+      students : students
+    }));
+    axios.get('/api/campus')
+    .then(res => res.data)
+    .then(campuses => this.setState({ 
+      campuses : campuses
+    }));
+  }
+
   addCampus (campusName) {
     axios.post('/api/campus', { name: campusName })
     .then(res => res.data)
@@ -51,8 +64,10 @@ export default class Main extends Component {
           </div>
           <div className="col-xs-10">
             <Switch>
-              <Route exact path="/campuses" component={Campuses} />
-              <Route exact path='/students' component={Students} />
+              <Route exact path='/home' component={Home} />
+              <Route exact path="/campuses" render={() => <Campuses campuses={this.state.campuses}/>}  />
+              <Route exact path='/students' render={() => <Students students={this.state.students}/>} />
+              <Route path='/campuses/:campusId/student' component={Home} />
               <Route path='/students/:studentId' component={Student} />
               <Route path='/campuses/:campusId' component={Campus} />
               <Route exact path='/new-campus' render={() => <NewCampus addCampus={this.addCampus}/>}  />
