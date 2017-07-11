@@ -33,3 +33,11 @@ router.post('/', function(req, res, next){
 	.then(student => res.status(201).json(student))
 	.catch(next);
 });
+
+router.delete('/:studentId', function(req, res, next){
+  const id = req.params.studentId;
+
+  Student.destroy({ where: { id } })
+    .then(() => res.status(204).end())
+    .catch(next);
+});
