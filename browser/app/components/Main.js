@@ -9,6 +9,7 @@ import Students from './Students';
 import Student from './Student';
 import NewCampus from './NewCampus';
 import NewStudent from './NewStudent';
+import DeleteCampus from './DeleteCampus';
 
 export default class Main extends Component {
 
@@ -67,7 +68,7 @@ export default class Main extends Component {
               <Route exact path='/home' component={Home} />
               <Route exact path="/campuses" render={() => <Campuses campuses={this.state.campuses}/>}  />
               <Route exact path='/students' render={() => <Students students={this.state.students}/>} />
-              <Route path='/campuses/:campusId/student' component={Home} />
+              <Route path='/delete-campus' component={DeleteCampus} />
               <Route path='/students/:studentId' component={Student} />
               <Route path='/campuses/:campusId' component={Campus} />
               <Route exact path='/new-campus' render={() => <NewCampus addCampus={this.addCampus}/>}  />

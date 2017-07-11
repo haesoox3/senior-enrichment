@@ -6,7 +6,7 @@ const Campuses = (props) => {
   return (
     <div>
       <h1>Campuses</h1>
-      {campuses.map((campus) => <h1 key={campus.id}><Link to={`/campuses/${campus.id}`}>{campus.name}</Link></h1>)}
+      {campuses.map((campus) => <h1 key={campus.id} className="col-xs-4"><Link to={`/campuses/${campus.id}`}><img src={campus.imgUrl} className='campusImg'/>{campus.name}</Link></h1>)}
     </div>
   );
 };

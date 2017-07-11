@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Switch, Link } from 'react-router-dom';
 import Bluebird from 'bluebird';
 import axios from 'axios';
+import Students from './Students';
 
 class Campus extends React.Component {
 
@@ -18,6 +19,7 @@ class Campus extends React.Component {
   componentDidMount () {
     const campusId = this.props.match.params.campusId;
     this.fetchByCampusId(campusId);
+    this.fetchStudentsByCampusId(campusId);
   }
 
   fetchByCampusId (campusId) {
@@ -29,7 +31,7 @@ class Campus extends React.Component {
   }
 
   fetchStudentsByCampusId(campusId){
-    axios.get(`/api/campus/${campusId}/students`)
+    axios.get(`/api/student/${campusId}/students`)
     .then(res => res.data)
     .then(students => this.setState({
       students : students
@@ -38,10 +40,12 @@ class Campus extends React.Component {
   
   render () {
     const campus = this.state.campus;
+    const students = this.state.students;
+    console.log('students??', students);
     return (
       <div className="campus">
-          <h3>{ campus.name }</h3>
-          <Link to={`/campuses/${campus.id}/students`}>Students</Link>
+          <h1>{ campus.name }</h1>
+          <Students students={this.state.students} />
       </div>
     );
   }

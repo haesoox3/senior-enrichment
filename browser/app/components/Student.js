@@ -32,7 +32,6 @@ class Student extends React.Component {
       <div className="student">
           <h3>{ student.name }</h3>
           <h5>{student.email}</h5>
-
       </div>
     );
   }

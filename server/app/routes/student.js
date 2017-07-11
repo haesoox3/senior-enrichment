@@ -12,6 +12,16 @@ router.get('/', function(req, res, next){
 	.catch(next);
 });
 
+router.get('/:campusId/students', function(req, res, next){
+	Student.findAll({
+		where:{
+			campusId: req.params.campusId
+		}
+	})
+	.then(students => res.send(students))
+	.catch(next);
+})
+
 router.get('/:studentId', function(req, res, next){
 	Student.findById(req.params.studentId)
 	.then(student => res.send(student))

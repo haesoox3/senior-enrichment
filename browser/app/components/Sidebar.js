@@ -23,18 +23,18 @@ const Sidebar = (props) => {
       <hr />
         <section>
           <h4 className="text-muted">USER OPTIONS</h4>
-
-            <div>
             <Link className="btn btn-primary btn-block" to="/new-campus">
               <span className="glyphicon glyphicon-plus"></span> ADD NEW CAMPUS
             </Link>
-            </div>
-            <div>
             <Link className="btn btn-primary btn-block" to="/new-student">
               <span className="glyphicon glyphicon-plus"></span> ADD NEW STUDENT
             </Link>
-            </div>
-
+            <Link className="btn btn-primary btn-block" to="/delete-student">
+              <span className="glyphicon glyphicon-plus"></span> DELETE STUDENT
+            </Link>
+            <Link className="btn btn-primary btn-block" to="/delete-campus">
+              <span className="glyphicon glyphicon-plus"></span> DELETE CAMPUS
+            </Link>
         </section>
     </sidebar>
   );
