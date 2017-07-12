@@ -8,6 +8,7 @@ export default class NewStudent extends Component {
     this.state = {
       name : '',
       email : '',
+      campus : '',
       edited : false
     }
     this.handleChange = this.handleChange.bind(this);
@@ -23,14 +24,17 @@ export default class NewStudent extends Component {
 
   handleSubmit (evt) {
     evt.preventDefault(); // prevent the page from refreshing
-    this.props.addStudent(this.state.name, this.state.email); // pass the input value to the method from Main!
+    this.props.addStudent(this.state.name, this.state.email, this.state.campus); // pass the input value to the method from Main!
     this.setState({
       name:'',
-      email: ''
+      email: '',
+      campus: '',
+      edited:false
     }); // reset the input value to be empty
   }
 
   render(){
+    const campusList = this.props.campuses;
     return (
       <div className="well">
         <form className="form-horizontal" onSubmit={this.handleSubmit}>
@@ -45,7 +49,14 @@ export default class NewStudent extends Component {
               <label className="col-xs-2 control-label">Email</label>
               <div className="col-xs-10">
                 <input className="form-control" type="text" name="email" value={this.state.email} onChange={this.handleChange}/>
-                {(this.state.edited && (this.state.email.length > 16 || this.state.email.length < 1)) ? <div className="alert alert-warning">Please enter a name</div> : <div/>}              
+                {(this.state.edited && (this.state.email.length > 16 || this.state.email.length < 1)) ? <div className="alert alert-warning">Please enter a valid email address</div> : <div/>}              
+              </div>
+              <label className="col-xs-2 control-label">Campus</label>
+              <div className="col-xs-10">
+                <select className="form-control" name="campus" value={this.state.campus} onChange={this.handleChange}>
+                  <option>-</option>
+                  {campusList.map((campus, idx) => (<option value={campus.id} key={`${idx}`}>{campus.name}</option>))}
+                </select>
               </div>
             </div>
             <div className="form-group">

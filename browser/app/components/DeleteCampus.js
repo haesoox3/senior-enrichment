@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Campuses from './Campuses';
 
 export default class DeleteCampus extends Component {
   constructor(){
@@ -42,26 +43,29 @@ export default class DeleteCampus extends Component {
   render () {
     const campusList = this.state.campuses;
     return (
-      <div className="well">
-        <form className="form-horizontal" noValidate name="campusSelect" onSubmit={this.handleSubmit}>
-          <fieldset>
-            <legend>Delete Campus</legend>
-            <div className="form-group">
-              <label htmlFor="campus" className="col-xs-2 control-label">Campus</label>
-              <div className="col-xs-10">
-                <select className="form-control" name="campus" value={this.state.inputValue} onChange={this.handleChange}>
-                  <option>-</option>
-                  {campusList.map((campus, idx) => (<option value={campus.id} key={`${idx}`}>{campus.name}</option>))}
-                </select>
+      <div>
+        <div className="well">
+          <form className="form-horizontal" noValidate name="campusSelect" onSubmit={this.handleSubmit}>
+            <fieldset>
+              <legend>Delete Campus</legend>
+              <div className="form-group">
+                <label htmlFor="campus" className="col-xs-2 control-label">Campus</label>
+                <div className="col-xs-10">
+                  <select className="form-control" name="campus" value={this.state.inputValue} onChange={this.handleChange}>
+                    <option>-</option>
+                    {campusList.map((campus, idx) => (<option value={campus.id} key={`${idx}`}>{campus.name}</option>))}
+                  </select>
+                </div>
               </div>
-            </div>
-            <div className="form-group">
-              <div className="col-xs-10 col-xs-offset-2">
-                <button type="submit" className="btn btn-success">Delete Campus</button>
+              <div className="form-group">
+                <div className="col-xs-10 col-xs-offset-2">
+                  <button type="submit" className="btn btn-success">Delete Campus</button>
+                </div>
               </div>
-            </div>
-          </fieldset>
-        </form>
+            </fieldset>
+          </form>
+        </div>
+        <Campuses campuses={campusList}/>
       </div>
     );
   }

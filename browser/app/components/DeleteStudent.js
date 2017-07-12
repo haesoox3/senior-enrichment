@@ -23,7 +23,7 @@ export default class DeleteStudent extends Component {
 
   deleteStudent(studentId){
     axios.delete(`/api/student/${studentId}`)
-    .then(res=>res.data)
+    .then(res=>res.data);
   }
 
   handleChange (event) {

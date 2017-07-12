@@ -23,7 +23,7 @@ export default class NewCampus extends Component {
   handleSubmit (evt) {
     evt.preventDefault(); // prevent the page from refreshing
     this.props.addCampus(this.state.inputValue); // pass the input value to the method from Main!
-    this.setState({inputValue: ''}); // reset the input value to be empty
+    this.setState({inputValue: '', edited: false}); // reset the input value to be empty
   }
 
   render(){

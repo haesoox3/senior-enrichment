@@ -23,9 +23,11 @@ const Sidebar = (props) => {
       <hr />
         <section>
           <h4 className="text-muted">USER OPTIONS</h4>
+          <h4>
             <Link className="btn btn-primary btn-block" to="/new-campus">
               <span className="glyphicon glyphicon-plus"></span> ADD NEW CAMPUS
             </Link>
+          </h4>
             <Link className="btn btn-primary btn-block" to="/new-student">
               <span className="glyphicon glyphicon-plus"></span> ADD NEW STUDENT
             </Link>

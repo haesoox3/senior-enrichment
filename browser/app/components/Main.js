@@ -11,6 +11,7 @@ import NewCampus from './NewCampus';
 import NewStudent from './NewStudent';
 import DeleteCampus from './DeleteCampus';
 import DeleteStudent from './DeleteStudent';
+const _ = require('lodash');
 
 export default class Main extends Component {
 
@@ -22,6 +23,7 @@ export default class Main extends Component {
     }
     this.addCampus = this.addCampus.bind(this);
     this.addStudent = this.addStudent.bind(this);
+    this.deleteStudent = this.deleteStudent.bind(this);
   }
 
   componentDidMount(){
@@ -38,7 +40,8 @@ export default class Main extends Component {
   }
 
   addCampus (campusName) {
-    axios.post('/api/campus', { name: campusName })
+    const imgPaths = ['earth.jpg', 'mars.jpg', 'mercury.jpg'];
+    axios.post('/api/campus', { name: campusName, imgUrl : _.sample(imgPaths)})
     .then(res => res.data)
     .then(campus => {
       this.setState({
@@ -47,14 +50,20 @@ export default class Main extends Component {
     });
   }
 
-  addStudent (studentName, studentEmail) {
-    axios.post('/api/student', { name: studentName, email: studentEmail })
+  addStudent (studentName, studentEmail, campusId) {
+    campusId = (campusId === '') ? null : campusId;
+    axios.post('/api/student', { name: studentName, email: studentEmail, campusId: campusId })
     .then(res => res.data)
     .then(student => {
       this.setState({
         students: [...this.state.students, student]
       });
     });
+  }
+
+  deleteStudent(studentId){
+    axios.delete(`/api/student/${studentId}`)
+    .then(res=>res.data);
   }
 
   render () {
@@ -68,13 +77,13 @@ export default class Main extends Component {
             <Switch>
               <Route exact path='/home' component={Home} />
               <Route exact path="/campuses" render={() => <Campuses campuses={this.state.campuses}/>}  />
-              <Route exact path='/students' render={() => <Students students={this.state.students}/>} />
+              <Route exact path='/students' render={() => <Students students={this.state.students} deleteStudent={this.deleteStudent}/>} />
               <Route path='/delete-campus' component={DeleteCampus} />
               <Route path='/delete-student' component={DeleteStudent} />
               <Route path='/students/:studentId' component={Student} />
               <Route path='/campuses/:campusId' component={Campus} />
               <Route exact path='/new-campus' render={() => <NewCampus addCampus={this.addCampus}/>}  />
-              <Route exact path='/new-student' render={() => <NewStudent addStudent={this.addStudent}/>} />
+              <Route exact path='/new-student' render={() => <NewStudent addStudent={this.addStudent} campuses={this.state.campuses}/>} />
               <Route component={Home} />
             </Switch>
           </div>
