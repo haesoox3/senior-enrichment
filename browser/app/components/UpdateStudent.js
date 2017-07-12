@@ -53,7 +53,7 @@ export default class UpdateStudent extends Component {
         <fieldset>
           <legend>Choose a Student</legend>
           <div className="form-group">
-            <label htmlFor="campus" className="col-xs-2 control-label">Student</label>
+            <label htmlFor="campus" className="col-xs-2 control-label">Students</label>
             <div className="col-xs-10">
               <select className="form-control" name="student" onChange={this.handleStudentSelectChange}>
                 <option>-</option>

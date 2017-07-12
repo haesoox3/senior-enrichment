@@ -15,6 +15,8 @@ export default class UpdateCampus extends Component {
     this.handleCampusInformationChange = this.handleCampusInformationChange.bind(this);
     this.handleCampusSelectChange = this.handleCampusSelectChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleStudentChange = this.handleStudentChange.bind(this);
+    this.handleStudentSubmit = this.handleStudentSubmit.bind(this);
   }
 
   handleCampusSelectChange(event){
@@ -36,6 +38,15 @@ export default class UpdateCampus extends Component {
     });
   }
 
+  handleStudentChange(event){
+    //event.target.value is STUDENT ID
+    console.log('selected student', event.target.value);
+  }
+
+  handleStudentSubmit(event){
+
+  }
+
   handleSubmit (evt) {
     evt.preventDefault(); // prevent the page from refreshing
     this.props.editCampus(this.state.campusId, this.state.name, this.state.imgUrl, this.state.students); // pass the input value to the method from Main!
@@ -49,13 +60,14 @@ export default class UpdateCampus extends Component {
 
   render(){
     const campusList = this.props.campuses;
+    const studentList = this.state.students;
     console.log('my students list', this.state.students);
     return (
       <div>
         <fieldset>
           <legend>Choose a Campus</legend>
           <div className="form-group">
-            <label htmlFor="campus" className="col-xs-2 control-label">Student</label>
+            <label htmlFor="campus" className="col-xs-2 control-label">Campuses</label>
             <div className="col-xs-10">
               <select className="form-control" name="campus" onChange={this.handleCampusSelectChange}>
                 <option>-</option>
@@ -82,6 +94,17 @@ export default class UpdateCampus extends Component {
                   <button type="submit" className="btn btn-success">Edit Campus</button>
                 </div>
               </div>
+          </fieldset>
+        </form>
+        <form className="form-horizontal" onSubmit={this.handleStudentSubmit}>
+          <fieldset>
+            <legend>Students</legend>
+            <div>
+              {studentList.map((student, idx)=> <div key={idx}><input type="checkbox" id={student.name} value={student.id} onChange={this.handleStudentChange}/><label>{student.name}</label></div>)}
+            </div>
+            <div>
+              <button>Remove Selected Students</button>
+            </div>
           </fieldset>
         </form>
       </div>
