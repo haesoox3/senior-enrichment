@@ -21,7 +21,9 @@ export default class UpdateStudent extends Component {
     const studentId = event.target.value;
     axios.get(`/api/student/${studentId}`)
     .then(res => res.data)
-    .then(student => this.setState({ studentId: student.id, name: student.name, email: student.email }));
+    .then(student => {
+      this.setState({ studentId: student.id, name: student.name, email: student.email, campus: student.campusId })
+    })
   }
 
   handleStudentInfoChange (event) {
@@ -45,6 +47,7 @@ export default class UpdateStudent extends Component {
   render(){
     const students = this.props.students;
     const campusList = this.props.campuses;
+    console.log('my campus', this.state.campus);
     return (
       <div>
         <fieldset>
@@ -75,7 +78,7 @@ export default class UpdateStudent extends Component {
               <div className="col-xs-10">
                 <select className="form-control" name="campus" value={this.state.campus} onChange={this.handleStudentInfoChange}>
                   <option>-</option>
-                    {campusList.map((campus, idx) => (<option value={campus.id} key={`${idx}`}>{campus.name}</option>))}
+                  {campusList.map((campus, idx) => (<option value={campus.id} key={`${idx}`}>{campus.name}</option>))}
                 </select>
               </div>
             </div>

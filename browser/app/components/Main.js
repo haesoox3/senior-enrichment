@@ -65,6 +65,7 @@ export default class Main extends Component {
   }
 
   editStudent(studentId, studentName, studentEmail, campusId){
+    console.log('campusId recieved', campusId);
     axios.put(`/api/student/${studentId}`, {name: studentName, email: studentEmail, campusId: campusId })
     .then(res => res.data)
     .then(student => {
