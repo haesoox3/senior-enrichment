@@ -11,6 +11,8 @@ import NewCampus from './NewCampus';
 import NewStudent from './NewStudent';
 import DeleteCampus from './DeleteCampus';
 import DeleteStudent from './DeleteStudent';
+import UpdateStudent from './UpdateStudent';
+import UpdateCampus from './UpdateCampus';
 const _ = require('lodash');
 
 export default class Main extends Component {
@@ -24,6 +26,7 @@ export default class Main extends Component {
     this.addCampus = this.addCampus.bind(this);
     this.addStudent = this.addStudent.bind(this);
     this.deleteStudent = this.deleteStudent.bind(this);
+    this.editStudent = this.editStudent.bind(this);
   }
 
   componentDidMount(){
@@ -61,6 +64,16 @@ export default class Main extends Component {
     });
   }
 
+  editStudent(studentId, studentName, studentEmail, campusId){
+    axios.put(`/api/student/${studentId}`, {name: studentName, email: studentEmail, campusId: campusId })
+    .then(res => res.data)
+    .then(student => {
+      this.setState({
+        students: [...this.state.students, student]
+      });
+    });
+  }
+
   deleteStudent(studentId){
     axios.delete(`/api/student/${studentId}`)
     .then(res=>res.data);
@@ -80,6 +93,8 @@ export default class Main extends Component {
               <Route exact path='/students' render={() => <Students students={this.state.students} deleteStudent={this.deleteStudent}/>} />
               <Route path='/delete-campus' component={DeleteCampus} />
               <Route path='/delete-student' component={DeleteStudent} />
+              <Route path='/update-student' render={()=> <UpdateStudent students={this.state.students} campuses={this.state.campuses} editStudent={this.editStudent}/>} />
+              <Route path='/update-campus' component={UpdateCampus} />
               <Route path='/students/:studentId' component={Student} />
               <Route path='/campuses/:campusId' component={Campus} />
               <Route exact path='/new-campus' render={() => <NewCampus addCampus={this.addCampus}/>}  />

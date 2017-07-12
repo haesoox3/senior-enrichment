@@ -37,6 +37,12 @@ const Sidebar = (props) => {
             <Link className="btn btn-primary btn-block" to="/delete-campus">
               <span className="glyphicon glyphicon-plus"></span> DELETE CAMPUS
             </Link>
+            <Link className="btn btn-primary btn-block" to="/update-student">
+              <span className="glyphicon glyphicon-plus"></span> UPDATE STUDENT
+            </Link>
+            <Link className="btn btn-primary btn-block" to="/update-campus">
+              <span className="glyphicon glyphicon-plus"></span> UPDATE CAMPUS
+            </Link>
         </section>
     </sidebar>
   );

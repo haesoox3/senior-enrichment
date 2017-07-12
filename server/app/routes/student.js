@@ -34,6 +34,13 @@ router.post('/', function(req, res, next){
 	.catch(next);
 });
 
+router.put('/:studentId', function(req, res, next){
+	const studentId = req.params.studentId;
+	Student.update({name: req.body.name, email: req.body.email, campusId: req.body.campusId}, {where: {id : studentId}, returning: true})
+	.then(student => res.status(200).json(student))
+	.catch(next);
+});
+
 router.delete('/:studentId', function(req, res, next){
   const id = req.params.studentId;
 
