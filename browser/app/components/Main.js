@@ -77,7 +77,7 @@ export default class Main extends Component {
 
   editCampus(campusId, campusName, campusImgUrl, students){
     console.log('campusId recieved', campusId);
-    axios.put(`/api/campus/${campusId}`, {name: campusName, imgUrl: imgUrl })
+    axios.put(`/api/campus/${campusId}`, {name: campusName, imgUrl: campusImgUrl })
     .then(res => res.data)
     .then(campus => {
       this.setState({

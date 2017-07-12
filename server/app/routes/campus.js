@@ -29,12 +29,12 @@ router.post('/', function(req, res, next){
 	.catch(next);
 });
 
-router.put('/:campusId', function (req, res, next) {
-  const campusId = req.params.messageId;
-
-  Campus.findById(campusId)
-    .then(campus => campus.update(req.body))
-    .catch(next);
+router.put('/:campusId', function(req, res, next){
+	const campusId = req.params.campusId;
+	console.log('receivned campus id', campusId);
+	Campus.update({name: req.body.name, imgUrl: req.body.imgUrl}, {where: {id : campusId}, returning: true})
+	.then(campus => res.status(200).json(campus))
+	.catch(next);
 });
 
 router.delete('/:campusId', function(req, res, next){

@@ -6,16 +6,30 @@ export default class UpdateCampus extends Component {
   constructor(){
     super();
     this.state = {
+      campusId: '',
       name : '',
-      imgUrl: '',
+      imgUrl:'',
       students:[],
       edited : false
     }
-    this.handleChange = this.handleChange.bind(this);
+    this.handleCampusInformationChange = this.handleCampusInformationChange.bind(this);
+    this.handleCampusSelectChange = this.handleCampusSelectChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange (event) {
+  handleCampusSelectChange(event){
+    const campusId = event.target.value;
+    axios.get(`/api/campus/${campusId}`)
+    .then(res => res.data)
+    .then(campus => {
+      this.setState({ campusId: campus.id, name: campus.name, imgUrl: campus.imgUrl})
+      return axios.get(`/api/student/${campusId}/students`)
+    })
+    .then(res=> res.data)
+    .then(students => this.setState({students:students}));
+  }
+
+  handleCampusInformationChange (event) {
     this.setState({
       [event.target.name] : event.target.value,
       edited : true
@@ -24,7 +38,7 @@ export default class UpdateCampus extends Component {
 
   handleSubmit (evt) {
     evt.preventDefault(); // prevent the page from refreshing
-    this.props.addStudent(this.state.name, this.state.email, this.state.campus); // pass the input value to the method from Main!
+    this.props.editCampus(this.state.campusId, this.state.name, this.state.imgUrl, this.state.students); // pass the input value to the method from Main!
     this.setState({
       name:'',
       imgUrl: '',
@@ -35,6 +49,7 @@ export default class UpdateCampus extends Component {
 
   render(){
     const campusList = this.props.campuses;
+    console.log('my students list', this.state.students);
     return (
       <div>
         <fieldset>
@@ -42,32 +57,32 @@ export default class UpdateCampus extends Component {
           <div className="form-group">
             <label htmlFor="campus" className="col-xs-2 control-label">Student</label>
             <div className="col-xs-10">
-              <select className="form-control" name="campus">
+              <select className="form-control" name="campus" onChange={this.handleCampusSelectChange}>
                 <option>-</option>
                 {campusList.map((campus, idx) => (<option value={campus.id} key={`${idx}`}>{campus.name}</option>))}
               </select>
             </div>
           </div>
         </fieldset>
-        <form className="form-horizontal">
-        <fieldset>
-          <legend>Campus Information</legend>
-          <div className="form-group">
-              <label className="col-xs-2 control-label">Name</label>
-              <div className="col-xs-10">
-                <input className="form-control" type="text" name="name" value={this.state.name}/>
-              </div>
-              <label className="col-xs-2 control-label">Image</label>
-              <div className="col-xs-10">
-                <input className="form-control" type="text" name="image" value={this.state.imgUrl}/>
-              </div>
-            </div>
+        <form className="form-horizontal" onSubmit={this.handleSubmit}>
+          <fieldset>
+            <legend>Campus Information</legend>
             <div className="form-group">
-              <div className="col-xs-10 col-xs-offset-2">
-                <button type="submit" className="btn btn-success">Edit Campus</button>
+                <label className="col-xs-2 control-label">Name</label>
+                <div className="col-xs-10">
+                  <input className="form-control" type="text" name="name" value={this.state.name} onChange={this.handleCampusInformationChange}/>
+                </div>
+                <label className="col-xs-2 control-label">Image</label>
+                <div className="col-xs-10">
+                  <input className="form-control" type="text" name="imgUrl" value={this.state.imgUrl} onChange={this.handleCampusInformationChange}/>
+                </div>
               </div>
-            </div>
-        </fieldset>
+              <div className="form-group">
+                <div className="col-xs-10 col-xs-offset-2">
+                  <button type="submit" className="btn btn-success">Edit Campus</button>
+                </div>
+              </div>
+          </fieldset>
         </form>
       </div>
     );
