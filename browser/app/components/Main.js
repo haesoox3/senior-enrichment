@@ -75,6 +75,17 @@ export default class Main extends Component {
     });
   }
 
+  editCampus(campusId, campusName, campusImgUrl, students){
+    console.log('campusId recieved', campusId);
+    axios.put(`/api/campus/${campusId}`, {name: campusName, imgUrl: imgUrl })
+    .then(res => res.data)
+    .then(campus => {
+      this.setState({
+        campuses: [...this.state.campuses, campus]
+      });
+    });
+  }
+
   deleteStudent(studentId){
     axios.delete(`/api/student/${studentId}`)
     .then(res=>res.data);
@@ -95,7 +106,7 @@ export default class Main extends Component {
               <Route path='/delete-campus' component={DeleteCampus} />
               <Route path='/delete-student' component={DeleteStudent} />
               <Route path='/update-student' render={()=> <UpdateStudent students={this.state.students} campuses={this.state.campuses} editStudent={this.editStudent}/>} />
-              <Route path='/update-campus' component={UpdateCampus} />
+              <Route path='/update-campus' render={()=> <UpdateCampus campuses={this.state.campuses} editCampus={this.editCampus}/>} />
               <Route path='/students/:studentId' component={Student} />
               <Route path='/campuses/:campusId' component={Campus} />
               <Route exact path='/new-campus' render={() => <NewCampus addCampus={this.addCampus}/>}  />
