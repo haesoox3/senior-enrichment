@@ -27,6 +27,7 @@ export default class Main extends Component {
     this.addStudent = this.addStudent.bind(this);
     this.deleteStudent = this.deleteStudent.bind(this);
     this.editStudent = this.editStudent.bind(this);
+    this.editStudentList = this.editStudentList.bind(this);
   }
 
   componentDidMount(){
@@ -76,12 +77,11 @@ export default class Main extends Component {
   }
 
   editCampus(campusId, campusName, campusImgUrl, students){
-    console.log('campusId recieved', campusId);
     axios.put(`/api/campus/${campusId}`, {name: campusName, imgUrl: campusImgUrl })
     .then(res => res.data)
     .then(campus => {
       this.setState({
-        campuses: [...this.state.campuses, campus]
+        campuses: [...this.state.campuses, campus[1][0]]
       });
     });
   }
@@ -89,6 +89,18 @@ export default class Main extends Component {
   deleteStudent(studentId){
     axios.delete(`/api/student/${studentId}`)
     .then(res=>res.data);
+  }
+
+  editStudentList(studentIds, newCampus){
+    for (let studentId of studentIds){
+      axios.put(`/api/student/${studentId}`, newCampus)
+      .then(res=> res.data)
+      .then(student => {
+        this.setState({
+          students: [...this.state.students, student[1][0]]
+        })
+      })
+    }
   }
 
   render () {
@@ -106,7 +118,7 @@ export default class Main extends Component {
               <Route path='/delete-campus' component={DeleteCampus} />
               <Route path='/delete-student' component={DeleteStudent} />
               <Route path='/update-student' render={()=> <UpdateStudent students={this.state.students} campuses={this.state.campuses} editStudent={this.editStudent}/>} />
-              <Route path='/update-campus' render={()=> <UpdateCampus campuses={this.state.campuses} editCampus={this.editCampus}/>} />
+              <Route path='/update-campus' render={()=> <UpdateCampus campuses={this.state.campuses} students={this.state.students} editCampus={this.editCampus} editStudentList={this.editStudentList}/>} />
               <Route path='/students/:studentId' component={Student} />
               <Route path='/campuses/:campusId' component={Campus} />
               <Route exact path='/new-campus' render={() => <NewCampus addCampus={this.addCampus}/>}  />

@@ -3,20 +3,23 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 export default class UpdateCampus extends Component {
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state = {
       campusId: '',
       name : '',
       imgUrl:'',
-      students:[],
+      studentsToRemove : [],
+      studentsToAdd : [],
       edited : false
     }
     this.handleCampusInformationChange = this.handleCampusInformationChange.bind(this);
     this.handleCampusSelectChange = this.handleCampusSelectChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleCampusInformationSubmit = this.handleCampusInformationSubmit.bind(this);
     this.handleStudentChange = this.handleStudentChange.bind(this);
+    this.handleStudentChangeAdd = this.handleStudentChangeAdd.bind(this);
     this.handleStudentSubmit = this.handleStudentSubmit.bind(this);
+    this.handleStudentSubmitAdd = this.handleStudentSubmitAdd.bind(this);
   }
 
   handleCampusSelectChange(event){
@@ -39,29 +42,74 @@ export default class UpdateCampus extends Component {
   }
 
   handleStudentChange(event){
-    //event.target.value is STUDENT ID
-    console.log('selected student', event.target.value);
+    this.setState({
+      studentsToRemove:[...this.state.studentsToRemove, event.target.value]
+    }, function(){
+      console.log('students added or removed', this.state.studentsToRemove);
+    })
   }
+
+  handleStudentChangeAdd(event){
+    this.setState({
+      studentsToAdd:[...this.state.studentsToAdd, event.target.value]
+    }, function(){
+      console.log('students added or removed', this.state.studentsToAdd);
+    })
+  }
+
 
   handleStudentSubmit(event){
-
+    event.preventDefault();
+    const studentsBeingRemoved = [];
+    const mySet = new Set(this.state.studentsToRemove);
+    for (let id of mySet){
+      let count = 0;
+      for (let arrId of this.state.studentsToRemove){
+        if (arrId === id){
+          count ++;
+        }
+      }
+      if (count%2 === 1){
+        studentsBeingRemoved.push(id);
+      }
+    }
+    this.props.editStudentList(studentsBeingRemoved, {campusId: null});
   }
 
-  handleSubmit (evt) {
-    evt.preventDefault(); // prevent the page from refreshing
+  handleStudentSubmitAdd(event){
+    event.preventDefault();
+    const studentsBeingAdded = [];
+    const mySet = new Set(this.state.studentsToAdd);
+    for (let id of mySet){
+      let count = 0;
+      for (let arrId of this.state.studentsToAdd){
+        if (arrId === id){
+          count ++;
+        }
+      }
+      if (count%2 === 1){
+        studentsBeingAdded.push(id);
+      }
+    }
+    this.props.editStudentList(studentsBeingAdded, {campusId: this.state.campusId});
+  }
+
+  handleCampusInformationSubmit (evt) {
+    evt.preventDefault();
     this.props.editCampus(this.state.campusId, this.state.name, this.state.imgUrl, this.state.students); // pass the input value to the method from Main!
     this.setState({
       name:'',
       imgUrl: '',
       students: [],
       edited:false
-    }); // reset the input value to be empty
+    });
   }
 
   render(){
     const campusList = this.props.campuses;
-    const studentList = this.state.students;
-    console.log('my students list', this.state.students);
+    const studentList = this.props.students;
+    console.log("ALL MY STUDENTSS", studentList);
+
     return (
       <div>
         <fieldset>
@@ -76,7 +124,7 @@ export default class UpdateCampus extends Component {
             </div>
           </div>
         </fieldset>
-        <form className="form-horizontal" onSubmit={this.handleSubmit}>
+        <form className="form-horizontal" onSubmit={this.handleCampusInformationSubmit}>
           <fieldset>
             <legend>Campus Information</legend>
             <div className="form-group">
@@ -98,12 +146,23 @@ export default class UpdateCampus extends Component {
         </form>
         <form className="form-horizontal" onSubmit={this.handleStudentSubmit}>
           <fieldset>
-            <legend>Students</legend>
+            <legend>Current Students</legend>
             <div>
-              {studentList.map((student, idx)=> <div key={idx}><input type="checkbox" id={student.name} value={student.id} onChange={this.handleStudentChange}/><label>{student.name}</label></div>)}
+              {studentList.filter((student) => student.campusId === this.state.campusId).map((student, idx)=> <div key={idx}><input key={student.id} type="checkbox" id={student.name} value={student.id} onChange={this.handleStudentChange}/><label>{student.name}</label></div>)}
             </div>
             <div>
               <button>Remove Selected Students</button>
+            </div>
+          </fieldset>
+        </form>
+        <form className="form-horizontal" onSubmit={this.handleStudentSubmitAdd}>
+          <fieldset>
+            <legend>Add New Students</legend>
+            <div>
+              {studentList.filter((student) => student.campusId !== this.state.campusId).map((student, idx)=> <div key={idx}><input key={student.id} type="checkbox" id={student.name} value={student.id} onChange={this.handleStudentChangeAdd}/><label>{student.name}</label></div>)}
+            </div>
+            <div>
+              <button>Add Selected Students</button>
             </div>
           </fieldset>
         </form>
