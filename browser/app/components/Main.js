@@ -103,7 +103,7 @@ export default class Main extends Component {
 
   deleteCampus(campusId){
     axios.delete(`/api/campus/${campusId}`)
-    .then(res=>res.data)
+    .then(res=>res.data);
   }
 
   deleteStudent(studentId){

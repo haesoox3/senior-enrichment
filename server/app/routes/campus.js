@@ -41,6 +41,7 @@ router.delete('/:campusId', function(req, res, next){
   const id = req.params.campusId;
 
   Campus.destroy({ where: { id } })
+    .then(() => User.update({campusId: null}, {where: {cmapusId: id}}))
     .then(() => res.status(204).end())
     .catch(next);
 });

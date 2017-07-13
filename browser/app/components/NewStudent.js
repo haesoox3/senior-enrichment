@@ -30,7 +30,7 @@ export default class NewStudent extends Component {
       email: '',
       campus: '',
       edited:false
-    }); // reset the input value to be empty
+    });
   }
 
   render(){
