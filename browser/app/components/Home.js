@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const Home = (props) => {
   return (
   	<div>
-  		<h1>WELCOME TO MARGARET HAMILTON INTERPLANETARY ACADEMY of JAVASCRIPT</h1>
+  		<h1>WELCOME TO MARGARET HAMILTON INTERPLANETARY ACADEMY OF JAVASCRIPT</h1>
   		<Link to='/campuses'>
   		<button>View Campuses</button>
   		</Link>

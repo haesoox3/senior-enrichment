@@ -8,23 +8,10 @@ export default class DeleteCampus extends Component {
     super();
     this.state = {
     	inputValue : {},
-    	edited : false,
-    	campuses : []
+    	edited : false
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.deleteCampus = this.deleteCampus.bind(this);
-  }
-
-  componentDidMount(){
-    axios.get('/api/campus')
-    .then(res => res.data)
-    .then(campuses => this.setState({ campuses: campuses }));
-  }
-
-  deleteCampus(campusId){
-    axios.delete(`/api/campus/${campusId}`)
-    .then(res=>res.data)
   }
 
   handleChange (event) {
@@ -36,12 +23,12 @@ export default class DeleteCampus extends Component {
 
   handleSubmit (evt) {
     evt.preventDefault(); // prevent the page from refreshing
-    this.deleteCampus(this.state.inputValue); // pass the input value to the method from Main!
+    this.props.deleteCampus(this.state.inputValue); // pass the input value to the method from Main!
     this.setState({inputValue: {}}); // reset the input value to be empty
   }
 
   render () {
-    const campusList = this.state.campuses;
+    const campusList = this.props.campuses;
     return (
       <div>
         <div className="well">
@@ -65,7 +52,7 @@ export default class DeleteCampus extends Component {
             </fieldset>
           </form>
         </div>
-        <Campuses campuses={campusList}/>
+        <Campuses campuses={campusList} />
       </div>
     );
   }

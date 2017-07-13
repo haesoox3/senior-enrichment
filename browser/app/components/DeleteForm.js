@@ -1,35 +1,10 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import Students from './Students';
 
-export default class DeleteStudent extends Component {
-  constructor(){
-    super();
-    this.state = {
-    	inputValue : {},
-    	edited : false
-    }
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleChange (event) {
-    this.setState({
-    	edited: true,
-    	inputValue: event.target.value
-    });
-  }
-
-  handleSubmit (evt) {
-    evt.preventDefault(); // prevent the page from refreshing
-    this.props.deleteStudent(this.state.inputValue); // pass the input value to the method from Main!
-    this.setState({inputValue: {}}); // reset the input value to be empty
-  }
-
-  render () {
-    const studentList = this.props.students;
-    return (
+const DeleteForm = (props) => {
+	const type = props.type;
+  return (
       <div>
       <div className="well">
         <form className="form-horizontal" noValidate name="studentSelect" onSubmit={this.handleSubmit}>
@@ -55,5 +30,6 @@ export default class DeleteStudent extends Component {
         <Students students={studentList} />
       </div>
     );
-  }
 };
+
+export default DeleteForm;

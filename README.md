@@ -53,7 +53,7 @@ Use at least sequelize, express, react, and redux when creating this app. You ca
 - Actions: as a user I...
   X can create a campus
   X can edit a campus's info, including removing a student to/from that campus
-  * can edit a campus's info, including adding a student to/from that campus
+  X can edit a campus's info, including adding a student to/from that campus
   X can delete a campus
   X can create a student
   X can edit a student's info, including the campus that student is assigned to
@@ -78,7 +78,7 @@ X new student
 ```
 PUT
 X updated student info for one student
-- updated campus info for one campus
+X updated campus info for one campus
 ```
 
 ```
