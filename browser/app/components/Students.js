@@ -14,7 +14,7 @@ const Students = (props) => {
             <Link to={`/students/${student.id}`}>{student.name}</Link>
           </h2>
           <h4>{student.email}</h4>
-          <h4>Campus: {student.campusId ? campuses.filter((campus)=> Number(campus.id)===Number(student.campusId))[0].name : 'None'}</h4>
+          <h4>{student.campusId ? (campuses ? "Campus: " + campuses.filter((campus)=> Number(campus.id)===Number(student.campusId))[0].name : '') : 'Campus: None'} </h4>
         </div>);}
       )}
     </div>
@@ -22,3 +22,6 @@ const Students = (props) => {
 };
 
 export default Students;
+
+          // {student.campusId ? campuses.filter((campus)=> Number(campus.id)===Number(student.campusId))[0].name : 'None'}</h4>
+          // {campuses ? (student.campusId ? campuses.filter((campus)=> Number(campus.id)===Number(student.campusId))[0].name : 'None' }

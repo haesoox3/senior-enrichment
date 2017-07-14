@@ -15,7 +15,6 @@ class Campus extends React.Component {
     this.fetchByCampusId = this.fetchByCampusId.bind(this);
     this.fetchStudentsByCampusId = this.fetchStudentsByCampusId.bind(this);
     this.directionsClick = this.directionsClick.bind(this);
-    this.calendar = this.calendar.bind(this);
   }
 
   componentDidMount () {
@@ -36,28 +35,24 @@ class Campus extends React.Component {
     axios.get(`/api/student/${campusId}/students`)
     .then(res => res.data)
     .then(students => this.setState({
-      students : students
-    }))
+      students
+    }));
   }
 
   directionsClick(){
     const directions = ['Turn left on the intersection of KEEP and DREAMING', "Try Russia's Space Program?"];
     alert(_.sample(directions));
   }
-
-  calendar(){
-    var call = new CalendarPopup();
-  }
   
   render () {
     const campus = this.state.campus;
-    const students = this.state.students;
     return (
       <div className="campus">
         <h1>{ campus.name }</h1>
         <div className='center'>
           <button onClick={this.directionsClick}>Directions</button>
         </div>
+        <br/>
         <hr />
         <Students students={this.state.students}/>
       </div>

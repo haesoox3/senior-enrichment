@@ -53,25 +53,24 @@ class Student extends React.Component {
               <fieldset>
                 <legend>Contact {student.name}</legend>
                 <form>
-
-                <div className="form-group">
-                  <label className="col-xs-2 control-label">Name</label>
-                  <div className="col-xs-10">
-                    <input className="form-control" type="text" name="name" />
+                  <div className="form-group">
+                    <label className="col-xs-2 control-label">Name</label>
+                    <div className="col-xs-10">
+                      <input className="form-control" type="text" name="name" />
+                    </div>
+                    <label className="col-xs-2 control-label">Email</label>
+                    <div className="col-xs-10">
+                      <input className="form-control" type="text" name="email" />
+                    </div>
+                    <label className="col-xs-2 control-label">Comment</label>
+                    <div className="col-xs-10">
+                      <textarea type="text" name="content" rows="4" cols="50"/>
+                    </div>
                   </div>
-                  <label className="col-xs-2 control-label">Email</label>
-                  <div className="col-xs-10">
-                    <input className="form-control" type="text" name="email" />
+                  <div className="form-group">
+                    <input type="submit" value="Send"/>
+                    <input type="reset" value="Reset"/>
                   </div>
-                  <label className="col-xs-2 control-label">Comment</label>
-                  <div className="col-xs-10">
-                    <textarea type="text" name="content" rows="4" cols="50"/>
-                  </div>
-                </div>
-                <div className="form-group">
-                  <input type="submit" value="Send"/>
-                  <input type="reset" value="Reset"/>
-                </div>
                 </form>
               </fieldset>
             </div>) : <div></div>}

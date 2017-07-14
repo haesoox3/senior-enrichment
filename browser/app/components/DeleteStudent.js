@@ -52,7 +52,7 @@ export default class DeleteStudent extends Component {
           </fieldset>
         </form>
       </div>
-        <Students students={studentList} />
+        <Students students={studentList} campuses={this.props.campuses}/>
       </div>
     );
   }
