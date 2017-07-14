@@ -35,7 +35,7 @@ export default class NewCampus extends Component {
             <div className="form-group">
               <label className="col-xs-2 control-label">Name</label>
               <div className="col-xs-10">
-                <input className="form-control" type="text" name="name" value={this.state.inputValue} onChange={this.handleChange}/>
+                <input className="form-control" type="text" name="name" value={this.state.name} onChange={this.handleChange}/>
                 {(this.state.edited && (this.state.name.length > 16 || this.state.name.length < 1)) ? <div className="alert alert-warning">Please enter a name</div> : <div/>}              
               </div>
             </div>

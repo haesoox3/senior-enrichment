@@ -4,45 +4,45 @@ import { Link } from 'react-router-dom';
 const Sidebar = (props) => {
   return (
     <sidebar>
-      <img src='VIXX.png' className="logo" />
+      <Link to='/home'>
+        <img src='VIXX.png' className="logo" />
+      </Link>
       <section>
-        <h4 className="menu-item">
+        <h3 className="menu-item">
           <Link to="/home">HOME</Link>
-        </h4>
+        </h3>
       </section>
       <section>
-        <h4 className="menu-item">
+        <h3 className="menu-item">
           <Link to="/campuses">CAMPUSES</Link>
-        </h4>
+        </h3>
       </section>
       <section>
-        <h4 className="menu-item">
+        <h3 className="menu-item">
           <Link to="/students">STUDENTS</Link>
-        </h4>
+        </h3>
       </section>
       <hr />
-        <section>
-          <h4 className="text-muted">USER OPTIONS</h4>
-          <h4>
-            <Link className="btn btn-primary btn-block" to="/new-campus">
-              <span className="glyphicon glyphicon-plus"></span> ADD NEW CAMPUS
-            </Link>
-          </h4>
-            <Link className="btn btn-primary btn-block" to="/new-student">
-              <span className="glyphicon glyphicon-plus"></span> ADD NEW STUDENT
-            </Link>
-            <Link className="btn btn-primary btn-block" to="/delete-student">
-              <span className="glyphicon glyphicon-plus"></span> DELETE STUDENT
-            </Link>
-            <Link className="btn btn-primary btn-block" to="/delete-campus">
-              <span className="glyphicon glyphicon-plus"></span> DELETE CAMPUS
-            </Link>
-            <Link className="btn btn-primary btn-block" to="/update-student">
-              <span className="glyphicon glyphicon-plus"></span> UPDATE STUDENT
-            </Link>
-            <Link className="btn btn-primary btn-block" to="/update-campus">
-              <span className="glyphicon glyphicon-plus"></span> UPDATE CAMPUS
-            </Link>
+        <section className='menu-item'>
+          <h3>USER OPTIONS</h3>
+            <h5>
+              <Link className="btn btn-primary btn-block" to="/new-campus">ADD NEW CAMPUS</Link>
+            </h5>
+            <h5>
+              <Link className="btn btn-primary btn-block" to="/new-student">ADD NEW STUDENT</Link>
+            </h5>
+            <h5>
+              <Link className="btn btn-primary btn-block" to="/update-student">UPDATE STUDENT</Link>
+            </h5>
+            <h5>
+              <Link className="btn btn-primary btn-block" to="/update-campus">UPDATE CAMPUS</Link>
+            </h5>
+            <h5>
+              <Link className="btn btn-primary btn-block" to="/delete-student">DELETE STUDENT</Link>
+            </h5>
+            <h5>            
+              <Link className="btn btn-primary btn-block" to="/delete-campus">DELETE CAMPUS</Link>
+            </h5>
         </section>
     </sidebar>
   );

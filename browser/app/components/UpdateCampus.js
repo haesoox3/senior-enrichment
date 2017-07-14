@@ -44,17 +44,13 @@ export default class UpdateCampus extends Component {
   handleStudentChange(event){
     this.setState({
       studentsToRemove:[...this.state.studentsToRemove, event.target.value]
-    }, function(){
-      console.log('students added or removed', this.state.studentsToRemove);
-    })
+    });
   }
 
   handleStudentChangeAdd(event){
     this.setState({
       studentsToAdd:[...this.state.studentsToAdd, event.target.value]
-    }, function(){
-      console.log('students added or removed', this.state.studentsToAdd);
-    })
+    });
   }
 
 
@@ -108,10 +104,9 @@ export default class UpdateCampus extends Component {
   render(){
     const campusList = this.props.campuses;
     const studentList = this.props.students;
-    console.log("ALL MY STUDENTSS", studentList);
-
     return (
-      <div>
+      <div className='well'>
+        <h1>Update Campus Information</h1>
         <fieldset>
           <legend>Choose a Campus</legend>
           <div className="form-group">

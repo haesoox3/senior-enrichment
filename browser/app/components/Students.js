@@ -1,20 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Student from './Student';
 
 const Students = (props) => {
 	const students = props.students;
-	console.log('peops,', students);
   return (
     <div>
-      <h1>Students</h1>
+      <h1>STUDENTS</h1>
       {students.map((student) => {return (
-      	<div key={student.id} className="col-xs-4">
-      		<Link to={`/students/${student.id}`}>
-      			<h3>{student.name}</h3>
-      		</Link>
-      		<h5>{student.email}</h5>
-      		<h6>Campus: {student.campusId ? student.campusId : 'None'}</h6>
-      	</div>);}
+        <div key={student.id} className="col-xs-4">
+          <h2>
+            <Link to={`/students/${student.id}`}>{student.name}</Link>
+          </h2>
+          <h4>{student.email}</h4>
+          <h4>Campus: {student.campusId ? student.campusId : 'None'}</h4>
+        </div>);}
       )}
     </div>
   );

@@ -47,9 +47,9 @@ export default class UpdateStudent extends Component {
   render(){
     const students = this.props.students;
     const campusList = this.props.campuses;
-    console.log('my campus', this.state.campus);
     return (
-      <div>
+      <div className='well'>
+        <h1>Update Student Records</h1>
         <fieldset>
           <legend>Choose a Student</legend>
           <div className="form-group">

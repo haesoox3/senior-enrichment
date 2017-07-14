@@ -68,23 +68,21 @@ export default class Main extends Component {
   }
 
   editStudent(studentId, studentName, studentEmail, campusId){
-    console.log('campusId recieved', campusId);
     axios.put(`/api/student/${studentId}`, {name: studentName, email: studentEmail, campusId: campusId })
     .then(res => res.data)
     .then(student => {
       this.setState({
-        students: [...this.state.students, student]
+        students: this.state.students.filter(student=> Number(student.id)!== Number(studentId)).concat(student[1][0])
       });
     });
   }
 
   editCampus(campusId, campusName, campusImgUrl, students){
-    console.log('this state??', this.state);
     axios.put(`/api/campus/${campusId}`, {name: campusName, imgUrl: campusImgUrl })
     .then(res => res.data)
     .then(campus => {
       this.setState({
-        campuses: [...this.state.campuses, campus[1][0]]
+        campuses: this.state.campuses.filter(campus=> Number(campus.id)!== Number(campusId)).concat(campus[1][0])
       });
     });
   }
@@ -103,12 +101,26 @@ export default class Main extends Component {
 
   deleteCampus(campusId){
     axios.delete(`/api/campus/${campusId}`)
-    .then(res=>res.data);
+    .then(res=>res.data)
+    .then(()=>{
+      return axios.put(`api/student/${campusId}`, {campusId: null});
+    })
+    .then(res => res.data)
+    .then(()=>{
+      this.setState({
+        campuses: this.state.campuses.filter((campus) => Number(campus.id) !== Number(campusId))
+      });
+    });
   }
 
   deleteStudent(studentId){
     axios.delete(`/api/student/${studentId}`)
-    .then(res=>res.data);
+    .then(res=>res.data)
+    .then(()=>{
+      this.setState({
+        students: this.state.students.filter((student) => Number(student.id) !== Number(studentId))
+      });
+    });
   }
 
   render () {
@@ -120,9 +132,8 @@ export default class Main extends Component {
           </div>
           <div className="col-xs-10">
             <Switch>
-              <Route exact path='/home' component={Home} />
               <Route exact path="/campuses" render={() => <Campuses campuses={this.state.campuses}/>}  />
-              <Route exact path='/students' render={() => <Students students={this.state.students} deleteStudent={this.deleteStudent}/>} />
+              <Route exact path='/students' render={() => <Students students={this.state.students}/>} />
               <Route path='/delete-campus' render={() => <DeleteCampus campuses={this.state.campuses} deleteCampus={this.deleteCampus}/>} />
               <Route path='/delete-student' render={() => <DeleteStudent students={this.state.students} deleteStudent={this.deleteStudent}/>} />
               <Route path='/update-student' render={()=> <UpdateStudent students={this.state.students} campuses={this.state.campuses} editStudent={this.editStudent}/>} />

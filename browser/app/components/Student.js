@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Switch, Link } from 'react-router-dom';
-import Bluebird from 'bluebird';
 import axios from 'axios';
 
 class Student extends React.Component {
@@ -12,15 +11,11 @@ class Student extends React.Component {
       campus : {}
     };
     this.fetchStudentById = this.fetchStudentById.bind(this);
-    // this.fetchStudentCampus = this.fetchStudentCampus.bind(this);
   }
 
   componentDidMount () {
     const studentId = this.props.match.params.studentId;
     this.fetchStudentById(studentId);
-    // const campusId = this.state.student.campusId;
-    // console.log('student campus id', this.state.student);
-    // this.fetchStudentCampus(campusId);
   }
 
   fetchStudentById (studentId) {
@@ -36,31 +31,18 @@ class Student extends React.Component {
     .then(res => res.data)
     .then(campus => this.setState({campus:campus}));
   }
-
-  // fetchStudentCampus (campusId) {
-  //   axios.get(`/api/campus/${campusId}`)
-  //   .then(res => res.data)
-  //   .then(campus => {
-  //     this.setState({
-  //       campus
-  //     });
-  //     return 
-  //   }
-  //   );
-  // }
   
   render () {
     const student = this.state.student;
-    console.log('student info', student);
     return (
       <div className="student">
-          <h3>{ student.name }</h3>
-          <h5>{student.email}</h5>
-          <h5>Campus: <Link to={`/campuses/${student.campusId}`}>{this.state.campus.name}</Link></h5>
+          <h1>{ student.name }</h1>      
+          <h3>Student Email: {student.email}</h3>
+          <h3>Campus: <Link to={`/campuses/${student.campusId}`}>{this.state.campus.name}</Link></h3>
+          <button>Contact {student.name}</button>
       </div>
     );
   }
 }
 
 export default Student;
-
