@@ -4,6 +4,7 @@ import Student from './Student';
 
 const Students = (props) => {
 	const students = props.students;
+  const campuses = props.campuses;
   return (
     <div>
       <h1>STUDENTS</h1>
@@ -13,7 +14,7 @@ const Students = (props) => {
             <Link to={`/students/${student.id}`}>{student.name}</Link>
           </h2>
           <h4>{student.email}</h4>
-          <h4>Campus: {student.campusId ? student.campusId : 'None'}</h4>
+          <h4>Campus: {student.campusId ? campuses.filter((campus)=> Number(campus.id)===Number(student.campusId))[0].name : 'None'}</h4>
         </div>);}
       )}
     </div>

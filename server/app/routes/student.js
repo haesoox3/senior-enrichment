@@ -35,15 +35,9 @@ router.post('/', function(req, res, next){
 });
 
 router.put('/:studentId', function(req, res, next){
+	console.log('hitting first one?')
 	const studentId = req.params.studentId;
 	Student.update(req.body, {where: {id : studentId}, returning: true})
-	.then(student => res.status(200).json(student))
-	.catch(next);
-});
-
-router.put('/:campusId', function(req, res, next){
-	const campusId = req.params.campusId;
-	Student.update(req.body, {where: {campusId: campusId}, returning: true})
 	.then(student => res.status(200).json(student))
 	.catch(next);
 });

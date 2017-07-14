@@ -21,6 +21,7 @@ body{
 }
 
 .student{
+  padding-top: 150px;
   border-color:grey;
   margin: 2px;
   color:white;
@@ -36,7 +37,7 @@ button{
 }
 
 img{
-  border-radius: 25%;
+  border-radius: 30%;
 }
 
 .center{
